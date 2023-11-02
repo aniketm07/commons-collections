@@ -16,26 +16,15 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for ListUtils.
@@ -48,7 +37,7 @@ public class ListUtilsTest {
     private static final String d = "d";
     private static final String e = "e";
     private static final String x = "x";
-
+    private static final String y = "y";
     private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
     private String[] fullArray;
 
@@ -94,8 +83,8 @@ public class ListUtilsTest {
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final List<String> a = new ArrayList<>( data );
-        final List<String> b = new ArrayList<>( data );
+        final List<String> a = new ArrayList<>(data);
+        final List<String> b = new ArrayList<>(data);
 
         assertEquals(a, b);
         assertTrue(ListUtils.isEqualList(a, b));
@@ -169,8 +158,7 @@ public class ListUtilsTest {
      */
     @Test
     public void testIntersectListWithNoOverlapAndDifferentTypes() {
-        @SuppressWarnings("boxing")
-        final List<Integer> other = Arrays.asList(1, 23);
+        @SuppressWarnings("boxing") final List<Integer> other = Arrays.asList(1, 23);
         assertTrue(ListUtils.intersection(fullList, other).isEmpty());
     }
 
@@ -478,6 +466,29 @@ public class ListUtilsTest {
         expected.add(x);
 
         assertEquals(expected, result);
+    }
+
+    /**
+     * this method tests if it returns a new list containing the second list appended to the first list.
+     */
+    @Test
+    public void testUnion() {
+        final List<String> list1 = new ArrayList<>();
+        list1.add(a);
+        list1.add(b);
+        list1.add(x);
+        final List<String> list2 = new ArrayList<>();
+        list2.add(c);
+        list2.add(d);
+        list2.add(y);
+        final List<String> unionList = new ArrayList<>();
+        unionList.add(a);
+        unionList.add(b);
+        unionList.add(x);
+        unionList.add(c);
+        unionList.add(d);
+        unionList.add(y);
+        Assertions.assertEquals(ListUtils.union(list1, list2), unionList);
     }
 
 }

@@ -16,14 +16,12 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.EmptyStackException;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests ArrayStack.
@@ -99,6 +97,17 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    /**
+     * This method test if peek() throws Exception if stack is empty and we trying to access an element for example at position 2
+     */
+    @Test
+    public void testPeek() {
+        final ArrayStack<E> stack = makeObject();
+        Assertions.assertThrows(EmptyStackException.class, () -> {
+            stack.peek(2);
+        });
     }
 
 //    public void testCreate() throws Exception {
